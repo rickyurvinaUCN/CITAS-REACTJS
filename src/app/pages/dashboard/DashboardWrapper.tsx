@@ -87,7 +87,11 @@ const DashboardPage = () => {
 
       </div>
       {/* end::Row */}
-      <CreateAppModal show={showCreateAppModal} handleClose={() => setShowCreateAppModal(false)} />
+      <CreateAppModal
+        show={showCreateAppModal}
+        handleClose={() => setShowCreateAppModal(false)} 
+        getAllAppointments={getAllAppointments}
+        />
 
     </>
   )

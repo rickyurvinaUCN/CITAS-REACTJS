@@ -12,11 +12,12 @@ import { UserEditModalFormWrapper } from '../../../../app/modules/apps/user-mana
 type Props = {
   show: boolean
   handleClose: () => void
+  getAllAppointments: () => void
 }
 
 const modalsRoot = document.getElementById('root-modals') || document.body
 
-const CreateAppModal = ({ show, handleClose }: Props) => {
+const CreateAppModal = ({ show, handleClose, getAllAppointments }: Props) => {
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
   const [data, setData] = useState<ICreateAppData>(defaultCreateAppData)
@@ -52,7 +53,7 @@ const CreateAppModal = ({ show, handleClose }: Props) => {
 
       <div className='modal-body py-lg-10 px-lg-10'>
         {/*begin::Stepper */}
-        <UserEditModalFormWrapper handleClose={handleClose} />
+        <UserEditModalFormWrapper handleClose={handleClose} getAllAppointments={getAllAppointments} />
 
         {/* end::Stepper */}
       </div>

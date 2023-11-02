@@ -4,7 +4,7 @@ import {isNotEmpty, QUERIES} from '../../../../../../_metronic/helpers'
 import {useListView} from '../core/ListViewProvider'
 import {getUserById} from '../core/_requests'
 
-const UserEditModalFormWrapper = ({handleClose}) => {
+const UserEditModalFormWrapper = ({handleClose, getAllAppointments}) => {
   const {itemIdForUpdate, setItemIdForUpdate} = useListView()
   const enabledQuery: boolean = isNotEmpty(itemIdForUpdate)
   const {
@@ -27,11 +27,11 @@ const UserEditModalFormWrapper = ({handleClose}) => {
   )
 
   if (!itemIdForUpdate) {
-    return <UserEditModalForm isUserLoading={isLoading} appointment={{id: undefined}} handleClose={handleClose} />
+    return <UserEditModalForm isUserLoading={isLoading} appointment={{id: undefined}} handleClose={handleClose} getAllAppointments={getAllAppointments} />
   }
 
   if (!isLoading && !error && appointment) {
-    return <UserEditModalForm isUserLoading={isLoading} appointment={appointment} handleClose={handleClose} />
+    return <UserEditModalForm isUserLoading={isLoading} appointment={appointment} handleClose={handleClose} getAllAppointments={getAllAppointments}/>
   }
 
   return null

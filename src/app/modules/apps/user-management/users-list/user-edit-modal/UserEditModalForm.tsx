@@ -1,15 +1,14 @@
 import { FC, useState, useEffect } from 'react'
 import * as Yup from 'yup'
-import { ErrorMessage, Field, useFormik } from 'formik'
-import { isNotEmpty, toAbsoluteUrl } from '../../../../../../_metronic/helpers'
+import { useFormik } from 'formik'
+import { isNotEmpty } from '../../../../../../_metronic/helpers'
 import clsx from 'clsx'
 import { useListView } from '../core/ListViewProvider'
 import { UsersListLoading } from '../components/loading/UsersListLoading'
-import { createAppointment } from '../core/_requests'
+import { createAppointment, updateUser } from '../core/_requests'
 import { useQueryResponse } from '../core/QueryResponseProvider'
 import { Appointment } from '../../../../appointomens/_models'
 import axios from 'axios'
-import { User } from '../core/_models'
 
 const URL_API = "http://192.168.0.6:8000/api/"
 
@@ -17,6 +16,7 @@ type Props = {
   isUserLoading: boolean
   appointment: Appointment
   handleClose: () => void
+  getAllAppointments: () => void
 }
 
 const editUserSchema = Yup.object().shape({
@@ -36,13 +36,15 @@ const editUserSchema = Yup.object().shape({
 
 })
 
-const UserEditModalForm: FC<Props> = ({ isUserLoading, appointment, handleClose }) => {
+const UserEditModalForm: FC<Props> = ({ isUserLoading, appointment, handleClose, getAllAppointments }) => {
   const { setItemIdForUpdate } = useListView()
   const { refetch } = useQueryResponse()
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     getUsers();
   }, []);
+
   const getUsers = async () => {
     const response = await axios
       .get(`${URL_API}users`)
@@ -82,6 +84,8 @@ const UserEditModalForm: FC<Props> = ({ isUserLoading, appointment, handleClose 
           await updateUser(values)
         } else {
           await createAppointment(values)
+          handleClose()
+          getAllAppointments()
         }
       } catch (ex) {
         console.error(ex)
