@@ -1,16 +1,35 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { PageTitle } from '../../../_metronic/layout/core'
 import { Card2 } from '../../../_metronic/partials/content/cards/Card2'
 import { IconUserModel } from '../../modules/profile/ProfileModels'
 import { useState } from 'react'
 import { CreateAppModal } from '../../../_metronic/partials'
+import axios from 'axios'
 
+const URL_API = "http://192.168.0.6:8000/api/"
 
 const DashboardPage = () => {
 
   const [showCreateAppModal, setShowCreateAppModal] = useState<boolean>(false)
+
+  const [appointments, setAppointments] = useState<any[]>([])
+
+  useEffect(() => {
+    getAllAppointments();
+  }, []);
+
+  const getAllAppointments = async () => {
+    
+    const response = await axios
+      .get(`${URL_API}appointment`)
+      .then(res => {
+        setAppointments(res.data);
+        console.log(res.data)
+      })
+      .catch(error => console.log(error));
+  };
 
   return (
     <>
@@ -41,45 +60,48 @@ const DashboardPage = () => {
               href='#'
               onClick={() => {
                 setShowCreateAppModal(true)
-              
               }}
               className='btn btn-sm fw-bold btn-primary'
             >
-              New Project
+              Nueva Cita
             </a>
           </div>
         </div>
 
         <div className='row g-6 g-xl-9'>
-          <div className='col-md-6 col-xl-4'>
-            <Card2
-              icon='/media/svg/brand-logos/plurk.svg'
-              badgeColor='primary'
-              status='In Progress'
-              statusColor='primary'
-              title='Fitnes App'
-              description='CRM App application to HR efficiency'
-              date='November 10, 2021'
-              budget='$284,900.00'
-              progress={50}
-              users={users1}
-            />
-          </div>
+          {appointments.map((appointment, index) => {
+            return(
+              <div key={index} className='col-md-6 col-xl-4'>
+              <Card2
+                key={index}
+                icon='/media/svg/brand-logos/plurk.svg'
+                badgeColor='primary'
+                status='In Progress'
+                statusColor='primary'
+                title={appointment.name}
+                description={appointment.symptom}
+                date={appointment.date}
+                budget={appointment.user.name}
+                progress={50}
+              />
+            </div>
+            )
+          
+            })}
+
         </div>
 
-       
+
       </div>
       {/* end::Row */}
       <CreateAppModal show={showCreateAppModal} handleClose={() => setShowCreateAppModal(false)} />
+
     </>
   )
 }
 
 const DashboardWrapper: FC = () => {
   const intl = useIntl()
-
-
-
   return (
     <>
       <PageTitle breadcrumbs={[]}>{intl.formatMessage({ id: 'MENU.DASHBOARD' })}</PageTitle>
@@ -87,55 +109,5 @@ const DashboardWrapper: FC = () => {
     </>
   )
 }
-
-const users1: Array<IconUserModel> = [
-  { name: 'Emma Smith', avatar: '/media/avatars/300-6.jpg' },
-  { name: 'Rudy Stone', avatar: '/media/avatars/300-1.jpg' },
-  { name: 'Susan Redwood', initials: 'S', color: 'primary' },
-]
-
-const users2 = [
-  { name: 'Alan Warden', initials: 'A', color: 'warning' },
-  { name: 'Brian Cox', avatar: '/media/avatars/300-5.jpg' },
-]
-
-const users3 = [
-  { name: 'Mad Masy', avatar: '/media/avatars/300-6.jpg' },
-  { name: 'Cris Willson', avatar: '/media/avatars/300-1.jpg' },
-  { name: 'Mike Garcie', initials: 'M', color: 'info' },
-]
-
-const users4 = [
-  { name: 'Nich Warden', initials: 'N', color: 'warning' },
-  { name: 'Rob Otto', initials: 'R', color: 'success' },
-]
-
-const users5 = [
-  { name: 'Francis Mitcham', avatar: '/media/avatars/300-20.jpg' },
-  { name: 'Michelle Swanston', avatar: '/media/avatars/300-7.jpg' },
-  { name: 'Susan Redwood', initials: 'S', color: 'primary' },
-]
-
-const users6 = [
-  { name: 'Emma Smith', avatar: '/media/avatars/300-6.jpg' },
-  { name: 'Rudy Stone', avatar: '/media/avatars/300-1.jpg' },
-  { name: 'Susan Redwood', initials: 'S', color: 'primary' },
-]
-
-const users7 = [
-  { name: 'Meloday Macy', avatar: '/media/avatars/300-2.jpg' },
-  { name: 'Rabbin Watterman', initials: 'S', color: 'success' },
-]
-
-const users8 = [
-  { name: 'Emma Smith', avatar: '/media/avatars/300-6.jpg' },
-  { name: 'Rudy Stone', avatar: '/media/avatars/300-1.jpg' },
-  { name: 'Susan Redwood', initials: 'S', color: 'primary' },
-]
-
-const users9 = [
-  { name: 'Meloday Macy', avatar: '/media/avatars/300-2.jpg' },
-  { name: 'Rabbin Watterman', initials: 'S', color: 'danger' },
-]
 
 export { DashboardWrapper }
