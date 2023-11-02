@@ -30,6 +30,16 @@ const DashboardPage = () => {
       .catch(error => console.log(error));
   };
 
+  const deleteAppointment = async id => {
+    await axios
+      .delete(`${URL_API}appointment/${id}`)
+      .then(res => {
+        getAllAppointments();
+      })
+      .catch(error => console.log(error));
+  };
+
+
   return (
     <>
       {/* begin::Row */}
@@ -72,10 +82,12 @@ const DashboardPage = () => {
             return (
               <div key={index} className='col-md-6 col-xl-4'>
                 <Card2
+                  id={appointment.id}
                   name={appointment.name}
                   symptom={appointment.symptom}
                   date={appointment.date}
                   owner={appointment.user.name}
+                  deleteAppointment={deleteAppointment}
                 />
               </div>
             )
@@ -89,9 +101,9 @@ const DashboardPage = () => {
       {/* end::Row */}
       <CreateAppModal
         show={showCreateAppModal}
-        handleClose={() => setShowCreateAppModal(false)} 
+        handleClose={() => setShowCreateAppModal(false)}
         getAllAppointments={getAllAppointments}
-        />
+      />
 
     </>
   )

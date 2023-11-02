@@ -1,26 +1,45 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { KTIcon } from '../../../helpers'
+import { DeleteConfrimation } from '../../../../app/modules/appointomens/DeleteConfirmation'
 
 type Props = {
+  id:number
   name: string
   symptom: string
   date: string
   owner: string
+  deleteAppointment: (id: number) => void
 }
 
 const Card2: FC<Props> = ({
+  id,
   name,
   symptom,
   date,
   owner,
+  deleteAppointment
 }) => {
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const handleDeleteClick = () => {
+   
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleDeleteConfirmed = () => {
+
+    deleteAppointment(id)
+    setShowDeleteConfirmation(false); 
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteConfirmation(false); 
+  };
+
   return (
-    <Link
-      to='/crafted/pages/profile/overview'
-      className='card border border-2 border-gray-300 border-hover'
-    >
+    <>
       <div className='card-header border-0 pt-9'>
         <div className='card-title m-0'>
           <div className='symbol symbol-50px bg-light'>
@@ -31,12 +50,7 @@ const Card2: FC<Props> = ({
 
         <div className='card-toolbar'>
           <div className='d-flex justify-content-end flex-shrink-0'>
-            <a
-              href='#'
-              className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-            >
-              <KTIcon iconName='switch' className='fs-3' />
-            </a>
+          
             <a
               href='#'
               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
@@ -46,6 +60,7 @@ const Card2: FC<Props> = ({
             <a
               href='#'
               className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+              onClick={() => handleDeleteClick()}
             >
               <KTIcon iconName='trash' className='fs-3' />
             </a>
@@ -65,7 +80,13 @@ const Card2: FC<Props> = ({
           </div>
         </div>
       </div>
-    </Link>
+
+      <DeleteConfrimation
+        show={showDeleteConfirmation}
+        onHide={handleDeleteCancel}
+        onConfirm={handleDeleteConfirmed}
+      />
+    </>
   )
 }
 
