@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import {UserEditModalHeader} from './UserEditModalHeader'
 import {UserEditModalFormWrapper} from './UserEditModalFormWrapper'
 
-const UserEditModal = () => {
+const UserEditModal = ({handleClose}) => {
   useEffect(() => {
     document.body.classList.add('modal-open')
     return () => {
@@ -26,7 +26,7 @@ const UserEditModal = () => {
             <UserEditModalHeader />
             {/* begin::Modal body */}
             <div className='modal-body scroll-y mx-5 mx-xl-15 my-7'>
-              <UserEditModalFormWrapper />
+              <UserEditModalFormWrapper handleClose={handleClose} />
             </div>
             {/* end::Modal body */}
           </div>

@@ -52,7 +52,7 @@ const CreateAppModal = ({ show, handleClose }: Props) => {
 
       <div className='modal-body py-lg-10 px-lg-10'>
         {/*begin::Stepper */}
-        <UserEditModalFormWrapper />
+        <UserEditModalFormWrapper handleClose={handleClose} />
 
         {/* end::Stepper */}
       </div>

@@ -21,12 +21,11 @@ const DashboardPage = () => {
   }, []);
 
   const getAllAppointments = async () => {
-    
+
     const response = await axios
       .get(`${URL_API}appointment`)
       .then(res => {
         setAppointments(res.data);
-        console.log(res.data)
       })
       .catch(error => console.log(error));
   };
@@ -70,24 +69,18 @@ const DashboardPage = () => {
 
         <div className='row g-6 g-xl-9'>
           {appointments.map((appointment, index) => {
-            return(
+            return (
               <div key={index} className='col-md-6 col-xl-4'>
-              <Card2
-                key={index}
-                icon='/media/svg/brand-logos/plurk.svg'
-                badgeColor='primary'
-                status='In Progress'
-                statusColor='primary'
-                title={appointment.name}
-                description={appointment.symptom}
-                date={appointment.date}
-                budget={appointment.user.name}
-                progress={50}
-              />
-            </div>
+                <Card2
+                  name={appointment.name}
+                  symptom={appointment.symptom}
+                  date={appointment.date}
+                  owner={appointment.user.name}
+                />
+              </div>
             )
-          
-            })}
+
+          })}
 
         </div>
 

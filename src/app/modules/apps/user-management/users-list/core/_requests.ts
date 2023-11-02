@@ -1,10 +1,12 @@
 import axios, {AxiosResponse} from 'axios'
 import {ID, Response} from '../../../../../../_metronic/helpers'
 import {User, UsersQueryResponse} from './_models'
+import { Appointment } from '../../../../appointomens/_models'
 
 const API_URL = process.env.REACT_APP_THEME_API_URL
 const USER_URL = `${API_URL}/user`
 const GET_USERS_URL = `${API_URL}/users/query`
+const URL_API = "http://192.168.0.6:8000/api/"
 
 const getUsers = (query: string): Promise<UsersQueryResponse> => {
   return axios
@@ -19,11 +21,14 @@ const getUserById = (id: ID): Promise<User | undefined> => {
     .then((response: Response<User>) => response.data)
 }
 
-const createUser = (user: User): Promise<User | undefined> => {
+
+
+const createAppointment =(appointment: Appointment): Promise<Appointment | undefined> => {
+  console.log(appointment)
   return axios
-    .put(USER_URL, user)
-    .then((response: AxiosResponse<Response<User>>) => response.data)
-    .then((response: Response<User>) => response.data)
+    .post(`${URL_API}appointment`, appointment)
+    .then((response: AxiosResponse<Response<Appointment>>) => response.data)
+    .then((response: Response<Appointment>) => response.data)
 }
 
 const updateUser = (user: User): Promise<User | undefined> => {
@@ -42,4 +47,4 @@ const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
   return axios.all(requests).then(() => {})
 }
 
-export {getUsers, deleteUser, deleteSelectedUsers, getUserById, createUser, updateUser}
+export {getUsers, deleteUser, deleteSelectedUsers, getUserById, updateUser, createAppointment}
