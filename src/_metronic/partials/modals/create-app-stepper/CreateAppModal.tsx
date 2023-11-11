@@ -27,7 +27,6 @@ const CreateAppModal = ({ show, handleClose, getAllAppointments }: Props) => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
   }
 
-
   const submit = () => {
     window.location.reload()
   }

@@ -176,9 +176,7 @@ const UserEditModalForm: FC<Props> = ({ isUserLoading, appointment, handleClose,
           {/* end::Input group */}
 
           {/* begin::Input group */}
-          <div className='fv-row mb-7'>
-
-          </div>
+        
           {/* end::Input group */}
 
           {/* begin::Input group */}

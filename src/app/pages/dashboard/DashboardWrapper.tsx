@@ -3,7 +3,6 @@ import { FC, useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { PageTitle } from '../../../_metronic/layout/core'
 import { Card2 } from '../../../_metronic/partials/content/cards/Card2'
-import { IconUserModel } from '../../modules/profile/ProfileModels'
 import { useState } from 'react'
 import { CreateAppModal } from '../../../_metronic/partials'
 import axios from 'axios'
@@ -42,8 +41,8 @@ const DashboardPage = () => {
 
   return (
     <>
-      {/* begin::Row */}
-      <div className='row g-5 g-xl-10 mb-5 mb-xl-10'>
+       {/* begin::Row */}
+       <div className='row g-5 g-xl-10 mb-5 mb-xl-10'>
         <div className='d-flex flex-wrap flex-stack mb-6'>
           <h3 className='fw-bolder my-2'>
             Mis citas
@@ -51,20 +50,6 @@ const DashboardPage = () => {
           </h3>
 
           <div className='d-flex flex-wrap my-2'>
-            <div className='me-4'>
-              <select
-                name='status'
-                data-control='select2'
-                data-hide-search='true'
-                className='form-select form-select-sm form-select-white w-125px'
-                defaultValue='Active'
-              >
-                <option value='Active'>Active</option>
-                <option value='Approved'>In Progress</option>
-                <option value='Declined'>To Do</option>
-                <option value='In Progress'>Completed</option>
-              </select>
-            </div>
             <a
               href='#'
               onClick={() => {
@@ -104,7 +89,6 @@ const DashboardPage = () => {
         handleClose={() => setShowCreateAppModal(false)}
         getAllAppointments={getAllAppointments}
       />
-
     </>
   )
 }
