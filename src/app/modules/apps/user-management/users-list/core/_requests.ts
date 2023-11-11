@@ -6,7 +6,7 @@ import { Appointment } from '../../../../appointomens/_models'
 const API_URL = process.env.REACT_APP_THEME_API_URL
 const USER_URL = `${API_URL}/user`
 const GET_USERS_URL = `${API_URL}/users/query`
-const URL_API = "http://192.168.0.6:8000/api/"
+const URL_API = "http://localhost:8000/api/"
 
 const getUsers = (query: string): Promise<UsersQueryResponse> => {
   return axios

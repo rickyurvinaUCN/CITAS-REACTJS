@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { CreateAppModal } from '../../../_metronic/partials'
 import axios from 'axios'
 
-const URL_API = "http://192.168.0.6:8000/api/"
+const URL_API = "http://localhost:8000/api/"
 
 const DashboardPage = () => {
 
